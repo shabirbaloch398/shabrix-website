@@ -1,1 +1,18 @@
 
+{
+  "name": "Shabrix",
+  "symbol": "SHBX",
+  "description": "Shabrix (SHBX) is a Solana-based digital currency designed for accessible peer-to-peer transfers and future digital payment use cases.",
+  "image": "https://shabrix.xyz/shbx-logo.png",
+  "external_url": "https://shabrix.xyz",
+  "attributes": [
+    {
+      "trait_type": "Network",
+      "value": "Solana"
+    },
+    {
+      "trait_type": "Token",
+      "value": "SHBX"
+    }
+  ]
+}
