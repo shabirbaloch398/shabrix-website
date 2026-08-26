@@ -1,0 +1,1699 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Shabrix (SHBX) — Live on Solana</title>
+
+  <meta
+    name="description"
+    content="Shabrix (SHBX) is a live Solana-based digital currency with a fixed supply of 1,000,000,000 SHBX. Mint Authority and Freeze Authority have been revoked."
+  >
+
+  <meta name="theme-color" content="#050912">
+
+  <style>
+    :root {
+      --background: #050912;
+      --background-2: #091321;
+      --card: #0d1828;
+      --border: #1b3047;
+      --text: #f5f9ff;
+      --muted: #91a3ba;
+      --cyan: #4de7ff;
+      --green: #4dff9b;
+      --red: #ff6577;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(
+          circle at 80% 10%,
+          rgba(25, 105, 135, 0.25),
+          transparent 35%
+        ),
+        var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 9, 18, 0.92);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 3px;
+    }
+
+    .logo-image {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 21px;
+      border-radius: 10px;
+      background: var(--cyan);
+      color: #031018;
+      font-weight: 800;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--cyan);
+    }
+
+    .hero {
+      min-height: 720px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(52px, 8vw, 90px);
+      line-height: 0.98;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 span {
+      color: var(--cyan);
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      margin-top: 20px;
+      font-size: 12px !important;
+      color: #71839b !important;
+    }
+
+    .coin {
+      width: min(360px, 75vw);
+      aspect-ratio: 1;
+      margin: auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(
+          circle,
+          #143b4d,
+          #08121e 68%
+        );
+      border: 2px solid var(--cyan);
+      box-shadow:
+        0 0 80px rgba(77, 231, 255, 0.15),
+        inset 0 0 50px rgba(77, 231, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .hero-logo {
+      width: 78%;
+      height: 78%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    section {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-number {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 42px;
+      margin: 10px 0 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(17, 32, 52, 0.9),
+          rgba(7, 14, 24, 0.9)
+        );
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+    }
+
+    .card h3 {
+      margin: 12px 0 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 25px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--cyan);
+      font-size: 30px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .allocation {
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .allocation-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .allocation-row:last-child {
+      border-bottom: none;
+    }
+
+    .allocation-row span {
+      color: var(--muted);
+    }
+
+    .allocation-row strong {
+      color: var(--cyan);
+    }
+
+    .authority-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .authority {
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid rgba(77, 255, 155, 0.25);
+      background: rgba(77, 255, 155, 0.04);
+    }
+
+    .authority h3 {
+      margin-bottom: 8px;
+    }
+
+    .revoked {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    /* LIVE MARKET */
+
+    .price-card {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(17, 32, 52, 0.95),
+          rgba(7, 14, 24, 0.95)
+        );
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .price-header {
+      padding: 25px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .price-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .price-title img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+
+    .price-title h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .price-title span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid rgba(77, 255, 155, 0.35);
+      border-radius: 999px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px rgba(77, 255, 155, 0.8);
+    }
+
+    .market-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .market-stat {
+      background: #07101c;
+      padding: 22px;
+    }
+
+    .market-stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .market-stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .market-stat-value.price {
+      color: var(--cyan);
+    }
+
+    .market-stat-value.positive {
+      color: var(--green);
+    }
+
+    .market-stat-value.negative {
+      color: var(--red);
+    }
+
+    .market-status {
+      padding: 15px 25px;
+      color: var(--muted);
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .market-status strong {
+      color: var(--green);
+    }
+
+    .chart-wrapper {
+      width: 100%;
+      background: #050912;
+      padding: 0;
+    }
+
+    .chart-frame {
+      width: 100%;
+      height: 550px;
+      border: 0;
+      display: block;
+      background: #050912;
+    }
+
+    .chart-fallback {
+      display: none;
+      min-height: 300px;
+      padding: 60px 25px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .chart-fallback h3 {
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .price-footer {
+      padding: 18px 25px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .price-footer a {
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .address-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .mint-address {
+      display: block;
+      margin-top: 8px;
+      color: var(--cyan);
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .pool-address {
+      color: var(--cyan);
+      font-family: monospace;
+      word-break: break-all;
+      font-size: 13px;
+    }
+
+    .verified-box {
+      margin-top: 25px;
+      padding: 20px;
+      border: 1px solid rgba(77,255,155,0.25);
+      border-radius: 15px;
+      background: rgba(77,255,155,0.04);
+    }
+
+    .verified-box strong {
+      color: var(--green);
+    }
+
+    details {
+      border-bottom: 1px solid var(--border);
+      padding: 22px 0;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details p {
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .cta {
+      text-align: center;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .cta h2 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.05;
+      margin-bottom: 30px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 800px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 80px;
+      }
+
+      .hero h1 {
+        font-size: 55px;
+      }
+
+      .coin {
+        width: 250px;
+      }
+
+      .grid,
+      .stats,
+      .authority-grid,
+      .market-stats {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 75px 0;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      .chart-frame {
+        height: 450px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="container nav-inner">
+
+    <a href="#home" class="logo">
+      <img
+        src="shbx-logo.png"
+        alt="Shabrix SHBX logo"
+        class="logo-image"
+      >
+      SHABRIX
+    </a>
+
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#tokenomics">Tokenomics</a>
+      <a href="#price">Live Price</a>
+      <a href="#contract">Token</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <a href="#buy" class="button">
+      Buy SHBX
+    </a>
+
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+
+<section id="home">
+
+  <div class="container hero">
+
+    <div>
+
+      <div class="eyebrow">
+        LIVE ON SOLANA · SHBX
+      </div>
+
+      <h1>
+        Digital value.<br>
+        <span>Built for movement.</span>
+      </h1>
+
+      <p>
+        Shabrix (SHBX) is a live Solana-based digital currency
+        designed for fast, accessible peer-to-peer transfers
+        and everyday digital payments.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#price" class="button">
+          View Live Price
+        </a>
+
+        <a href="#contract" class="button button-outline">
+          Official Token
+        </a>
+
+      </div>
+
+      <p class="hero-note">
+        SHBX is live on Solana. Always verify the official
+        mint address before trading.
+      </p>
+
+    </div>
+
+    <div class="coin">
+
+      <img
+        src="shbx-logo.png"
+        alt="Shabrix SHBX cryptocurrency logo"
+        class="hero-logo"
+      >
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+  <div class="container">
+
+    <div class="section-number">
+      01 · ABOUT
+    </div>
+
+    <h2>
+      Shabrix is live.
+    </h2>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <h3>
+          Live on Solana
+        </h3>
+
+        <p>
+          SHBX is deployed on Solana Mainnet and has
+          an active SHBX/SOL market.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          Peer-to-peer
+        </h3>
+
+        <p>
+          Shabrix is designed as a general-purpose
+          digital currency focused on peer-to-peer
+          transfers and future payment use cases.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          Fixed supply
+        </h3>
+
+        <p>
+          SHBX has a total supply of exactly
+          1,000,000,000 tokens, with Mint Authority revoked.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TOKENOMICS -->
+
+<section id="tokenomics">
+
+  <div class="container">
+
+    <div class="section-number">
+      02 · TOKENOMICS
+    </div>
+
+    <h2>
+      SHBX tokenomics.
+    </h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>1B</strong>
+        <span>Total supply</span>
+      </div>
+
+      <div class="stat">
+        <strong>9</strong>
+        <span>Decimals</span>
+      </div>
+
+      <div class="stat">
+        <strong>0%</strong>
+        <span>Transfer tax</span>
+      </div>
+
+      <div class="stat">
+        <strong>LIVE</strong>
+        <span>Market status</span>
+      </div>
+
+    </div>
+
+    <div class="allocation">
+
+      <div class="allocation-row">
+        <span>Public / Community</span>
+        <strong>50%</strong>
+      </div>
+
+      <div class="allocation-row">
+        <span>Liquidity</span>
+        <strong>15%</strong>
+      </div>
+
+      <div class="allocation-row">
+        <span>Ecosystem / Adoption</span>
+        <strong>10%</strong>
+      </div>
+
+      <div class="allocation-row">
+        <span>Treasury</span>
+        <strong>10%</strong>
+      </div>
+
+      <div class="allocation-row">
+        <span>Development</span>
+        <strong>7.5%</strong>
+      </div>
+
+      <div class="allocation-row">
+        <span>Marketing</span>
+        <strong>5%</strong>
+      </div>
+
+      <div class="allocation-row">
+        <span>Partnerships</span>
+        <strong>2.5%</strong>
+      </div>
+
+    </div>
+
+    <div class="authority-grid">
+
+      <div class="authority">
+
+        <h3>
+          Mint Authority
+        </h3>
+
+        <p class="revoked">
+          ✓ REVOKED
+        </p>
+
+        <p>
+          Mint Authority has been revoked. The revoked
+          authority cannot be used to mint additional SHBX.
+        </p>
+
+      </div>
+
+      <div class="authority">
+
+        <h3>
+          Freeze Authority
+        </h3>
+
+        <p class="revoked">
+          ✓ REVOKED
+        </p>
+
+        <p>
+          Freeze Authority has been revoked, preventing
+          that authority from freezing SHBX token accounts.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LIVE MARKET -->
+
+<section id="price">
+
+  <div class="container">
+
+    <div class="section-number">
+      03 · LIVE MARKET
+    </div>
+
+    <h2>
+      SHBX live market.
+    </h2>
+
+    <div class="price-card">
+
+      <div class="price-header">
+
+        <div class="price-title">
+
+          <img
+            src="shbx-logo.png"
+            alt="SHABRIX SHBX logo"
+          >
+
+          <div>
+
+            <h3>
+              SHABRIX / SOL
+            </h3>
+
+            <span>
+              Live market data
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          LIVE MARKET
+        </div>
+
+      </div>
+
+
+      <!-- LIVE MARKET DATA -->
+
+      <div class="market-stats">
+
+        <div class="market-stat">
+
+          <div class="market-stat-label">
+            SHBX PRICE
+          </div>
+
+          <div
+            id="live-price"
+            class="market-stat-value price"
+          >
+            Loading...
+          </div>
+
+        </div>
+
+
+        <div class="market-stat">
+
+          <div class="market-stat-label">
+            24H CHANGE
+          </div>
+
+          <div
+            id="price-change"
+            class="market-stat-value"
+          >
+            Loading...
+          </div>
+
+        </div>
+
+
+        <div class="market-stat">
+
+          <div class="market-stat-label">
+            LIQUIDITY
+          </div>
+
+          <div
+            id="liquidity"
+            class="market-stat-value"
+          >
+            Loading...
+          </div>
+
+        </div>
+
+
+        <div class="market-stat">
+
+          <div class="market-stat-label">
+            24H VOLUME
+          </div>
+
+          <div
+            id="volume"
+            class="market-stat-value"
+          >
+            Loading...
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="market-status">
+
+        <strong>● LIVE</strong>
+        &nbsp; Market data automatically refreshes.
+
+      </div>
+
+
+      <!-- CHART -->
+
+      <div class="chart-wrapper">
+
+        <iframe
+          id="dex-chart"
+          class="chart-frame"
+          src="https://dexscreener.com/solana/JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g?embed=1&theme=dark&trades=0&info=0"
+          title="SHABRIX SHBX live price chart"
+          loading="eager"
+          allow="clipboard-write"
+          referrerpolicy="no-referrer-when-downgrade"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+        </iframe>
+
+        <div
+          id="chart-fallback"
+          class="chart-fallback"
+        >
+          <h3>SHBX live market</h3>
+          <p>
+            If the embedded chart is blocked by your browser or network,
+            use the official external SHBX/SOL market chart below.
+          </p>
+          <br>
+          <a
+            href="https://dexscreener.com/solana/JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button"
+          >
+            Open Live SHBX Chart ↗
+          </a>
+        </div>
+
+      </div>
+
+
+      <div class="price-footer">
+
+        <span>
+          SHBX / SOL · Pool:
+          <span class="pool-address">
+            JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g
+          </span>
+        </span>
+
+        <a
+          href="https://dexscreener.com/solana/JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open full chart ↗
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- OFFICIAL TOKEN -->
+
+<section id="contract">
+
+  <div class="container">
+
+    <div class="section-number">
+      04 · OFFICIAL TOKEN
+    </div>
+
+    <h2>
+      Official SHBX token.
+    </h2>
+
+    <div class="card">
+
+      <h3>
+        Shabrix (SHBX) Solana Mint Address
+      </h3>
+
+      <div class="address-box">
+
+        <span class="mint-address">
+          Ev2GR433ztREuTtUaKQmXG52bnLXPUhMb8mVk2DCTgbe
+        </span>
+
+      </div>
+
+      <div class="verified-box">
+
+        <strong>✓ LIVE TOKEN</strong>
+
+        <p>
+          SHBX is live on Solana Mainnet with Mint Authority
+          and Freeze Authority revoked.
+        </p>
+
+      </div>
+
+      <div class="hero-buttons">
+
+        <a
+          class="button"
+          href="https://solscan.io/token/Ev2GR433ztREuTtUaKQmXG52bnLXPUhMb8mVk2DCTgbe"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on Solscan
+        </a>
+
+        <a
+          class="button button-outline"
+          href="https://explorer.solana.com/address/Ev2GR433ztREuTtUaKQmXG52bnLXPUhMb8mVk2DCTgbe"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Solana Explorer
+        </a>
+
+        <a
+          class="button button-outline"
+          href="https://dexscreener.com/solana/JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Market
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ROADMAP -->
+
+<section id="roadmap">
+
+  <div class="container">
+
+    <div class="section-number">
+      05 · ROADMAP
+    </div>
+
+    <h2>
+      Shabrix development.
+    </h2>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <h3>
+          ✓ 01 — Foundation
+        </h3>
+
+        <p>
+          Brand identity, token design, website,
+          token creation and project foundation completed.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          ✓ 02 — Launch
+        </h3>
+
+        <p>
+          Solana Mainnet deployment, token metadata,
+          liquidity and SHBX market launch completed.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          03 — Verification & Visibility
+        </h3>
+
+        <p>
+          Continue improving public metadata, token
+          visibility, market-data integrations and ecosystem presence.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          04 — Adoption
+        </h3>
+
+        <p>
+          Community growth, payment experiments,
+          partnerships and future SHBX applications.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- BUY -->
+
+<section id="buy">
+
+  <div class="container">
+
+    <div class="section-number">
+      06 · HOW TO BUY
+    </div>
+
+    <h2>
+      Buy and trade SHBX.
+    </h2>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <h3>
+          01 — Get a Solana wallet
+        </h3>
+
+        <p>
+          Use a Solana-compatible wallet such as Phantom,
+          Solflare or another supported wallet.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          02 — Fund your wallet
+        </h3>
+
+        <p>
+          You'll need SOL for Solana network fees
+          and for trading SHBX.
+        </p>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+          03 — Trade SHBX
+        </h3>
+
+        <p>
+          Open the SHBX/SOL market and always verify
+          the complete official mint address before swapping.
+        </p>
+
+        <br>
+
+        <a
+          href="https://raydium.io/swap/?inputMint=sol&outputMint=Ev2GR433ztREuTtUaKQmXG52bnLXPUhMb8mVk2DCTgbe"
+          class="button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Buy SHBX
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section id="faq">
+
+  <div class="container">
+
+    <div class="section-number">
+      07 · FAQ
+    </div>
+
+    <h2>
+      Frequently asked questions.
+    </h2>
+
+    <details>
+
+      <summary>
+        What is SHBX?
+      </summary>
+
+      <p>
+        SHBX is the ticker for Shabrix,
+        a Solana-based digital currency that is live
+        on Solana Mainnet.
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        Is SHBX live?
+      </summary>
+
+      <p>
+        Yes. SHBX is live on Solana Mainnet and has an
+        SHBX/SOL market.
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        What is the total supply?
+      </summary>
+
+      <p>
+        The total supply is 1,000,000,000 SHBX.
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        Can more SHBX be minted?
+      </summary>
+
+      <p>
+        Mint Authority has been revoked. The revoked
+        authority cannot be used to mint additional SHBX.
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        Can SHBX holder accounts be frozen?
+      </summary>
+
+      <p>
+        Freeze Authority has been revoked, so that authority
+        cannot be used to freeze SHBX token accounts.
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        What is the official SHBX mint address?
+      </summary>
+
+      <p>
+
+        The official Shabrix (SHBX) Solana mint address is:
+
+        <br><br>
+
+        <strong class="mint-address">
+          Ev2GR433ztREuTtUaKQmXG52bnLXPUhMb8mVk2DCTgbe
+        </strong>
+
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        What is the SHBX liquidity pool?
+      </summary>
+
+      <p>
+
+        The official SHBX/SOL pool used by this website is:
+
+        <br><br>
+
+        <strong class="pool-address">
+          JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g
+        </strong>
+
+      </p>
+
+    </details>
+
+    <details>
+
+      <summary>
+        Where can I see the SHBX live price?
+      </summary>
+
+      <p>
+        The Live Market section above displays live market
+        information when available. The full SHBX/SOL chart
+        can also be opened through the market link.
+      </p>
+
+    </details>
+
+  </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section>
+
+  <div class="container cta">
+
+    <div class="eyebrow">
+      SHABRIX · SHBX · LIVE ON SOLANA
+    </div>
+
+    <h2>
+      Built for a more accessible digital economy.
+    </h2>
+
+    <a
+      href="mailto:contact@shabrix.xyz"
+      class="button"
+    >
+      Contact Shabrix
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  <div class="container">
+
+    <p>
+      <strong>SHABRIX</strong>
+    </p>
+
+    <p>
+      © 2026 Shabrix. All rights reserved.
+    </p>
+
+    <p>
+      Crypto assets involve risk.
+      SHBX does not guarantee profit or appreciation
+      in value.
+    </p>
+
+  </div>
+
+</footer>
+
+
+<script>
+  /*
+    SHABRIX LIVE MARKET DATA
+
+    Official SHBX mint:
+    Ev2GR433ztREuTtUaKQmXG52bnLXPUhMb8mVk2DCTgbe
+
+    SHBX/SOL pool:
+    JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g
+  */
+
+  const SHBX_POOL =
+    "JD7NY4fKSShQGcaRh2ZZkx5R9kisfuP7XdqWU7vH5e4g";
+
+  const API_URL =
+    "https://api.dexscreener.com/latest/dex/pairs/solana/" +
+    SHBX_POOL;
+
+  function formatUSD(value) {
+
+    if (value === null || value === undefined || isNaN(value)) {
+      return "—";
+    }
+
+    const number = Number(value);
+
+    if (number >= 1) {
+      return "$" + number.toLocaleString(
+        undefined,
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4
+        }
+      );
+    }
+
+    if (number >= 0.01) {
+      return "$" + number.toFixed(6);
+    }
+
+    if (number >= 0.000001) {
+      return "$" + number.toFixed(8);
+    }
+
+    return "$" + number.toExponential(4);
+  }
+
+
+  function formatCompactUSD(value) {
+
+    if (value === null || value === undefined || isNaN(value)) {
+      return "—";
+    }
+
+    const number = Number(value);
+
+    if (number >= 1000000000) {
+      return "$" + (number / 1000000000).toFixed(2) + "B";
+    }
+
+    if (number >= 1000000) {
+      return "$" + (number / 1000000).toFixed(2) + "M";
+    }
+
+    if (number >= 1000) {
+      return "$" + (number / 1000).toFixed(2) + "K";
+    }
+
+    return "$" + number.toFixed(2);
+  }
+
+
+  function updateMarket(data) {
+
+    if (!data || !data.pair) {
+      throw new Error("Market pair not found");
+    }
+
+    const pair = data.pair;
+
+    const priceUSD = Number(pair.priceUsd);
+
+    const change24h =
+      pair.priceChange &&
+      pair.priceChange.h24 !== undefined
+        ? Number(pair.priceChange.h24)
+        : null;
+
+    const liquidity =
+      pair.liquidity &&
+      pair.liquidity.usd !== undefined
+        ? Number(pair.liquidity.usd)
+        : null;
+
+    const volume =
+      pair.volume &&
+      pair.volume.h24 !== undefined
+        ? Number(pair.volume.h24)
+        : null;
+
+
+    document.getElementById("live-price").textContent =
+      formatUSD(priceUSD);
+
+
+    const changeElement =
+      document.getElementById("price-change");
+
+    if (change24h !== null && !isNaN(change24h)) {
+
+      const sign = change24h >= 0 ? "+" : "";
+
+      changeElement.textContent =
+        sign + change24h.toFixed(2) + "%";
+
+      changeElement.classList.remove(
+        "positive",
+        "negative"
+      );
+
+      changeElement.classList.add(
+        change24h >= 0 ? "positive" : "negative"
+      );
+
+    } else {
+
+      changeElement.textContent = "—";
+
+    }
+
+
+    document.getElementById("liquidity").textContent =
+      formatCompactUSD(liquidity);
+
+
+    document.getElementById("volume").textContent =
+      formatCompactUSD(volume);
+
+    const updated = document.getElementById("market-updated");
+    if (updated) {
+      updated.textContent =
+        " · Updated " +
+        new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit"
+        });
+    }
+  }
+
+
+  async function loadMarketData() {
+
+    try {
+
+      const response =
+        await fetch(API_URL, {
+          cache: "no-store"
+        });
+
+      if (!response.ok) {
+        throw new Error(
+          "Market API returned " + response.status
+        );
+      }
+
+      const data = await response.json();
+
+      updateMarket(data);
+
+    } catch (error) {
+
+      console.error(
+        "SHBX market data error:",
+        error
+      );
+
+      document.getElementById(
+        "live-price"
+      ).textContent = "Unavailable";
+
+      document.getElementById(
+        "price-change"
+      ).textContent = "—";
+
+      document.getElementById(
+        "liquidity"
+      ).textContent = "—";
+
+      document.getElementById(
+        "volume"
+      ).textContent = "—";
+
+      const updated = document.getElementById("market-updated");
+      if (updated) {
+        updated.textContent = " · Market data temporarily unavailable";
+      }
+    }
+  }
+
+
+  /*
+    Load immediately and refresh every 30 seconds.
+  */
+
+  loadMarketData();
+
+  setInterval(
+    loadMarketData,
+    30000
+  );
+
+
+  /*
+    If the embedded chart cannot be displayed,
+    keep the rest of the live market section working
+    and show the external chart button instead.
+  */
+
+  const chart =
+    document.getElementById("dex-chart");
+
+  const fallback =
+    document.getElementById("chart-fallback");
+
+  chart.addEventListener(
+    "load",
+    function () {
+      fallback.style.display = "none";
+    }
+  );
+</script>
+
+</body>
+</html>
+
