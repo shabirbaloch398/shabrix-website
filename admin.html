@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shabrix Admin</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root {
+      --bg:#050912; --bg2:#091321; --card:#0d1828; --border:#1b3047;
+      --text:#f5f9ff; --muted:#91a3ba; --cyan:#4de7ff; --green:#4dff9b;
+      --red:#ff6577;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 80% 10%,rgba(25,105,135,.25),transparent 35%),var(--bg);color:var(--text);min-height:100vh}
+    .wrap{width:min(1050px,92%);margin:auto}
+    header{border-bottom:1px solid var(--border);padding:20px 0;background:rgba(5,9,18,.9);position:sticky;top:0;z-index:5}
+    .head{display:flex;justify-content:space-between;align-items:center;gap:15px}
+    .brand{font-weight:800;letter-spacing:3px}
+    .brand span{color:var(--cyan)}
+    .button{border:0;border-radius:9px;padding:11px 16px;background:var(--cyan);color:#031018;font-weight:800;cursor:pointer}
+    .button.secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .button.danger{background:transparent;color:var(--red);border:1px solid rgba(255,101,119,.35)}
+    main{padding:45px 0}
+    .panel{background:linear-gradient(145deg,rgba(17,32,52,.95),rgba(7,14,24,.95));border:1px solid var(--border);border-radius:18px;padding:25px;margin-bottom:20px}
+    h1{font-size:36px;margin-bottom:8px}
+    h2{font-size:22px;margin-bottom:18px}
+    .muted{color:var(--muted)}
+    label{display:block;color:var(--muted);font-size:13px;margin:14px 0 7px}
+    input,select,textarea{width:100%;background:#07101c;border:1px solid var(--border);border-radius:9px;color:var(--text);padding:12px;font:inherit}
+    textarea{min-height:170px;resize:vertical;font-family:monospace;font-size:13px}
+    input:focus,select:focus,textarea:focus{outline:1px solid var(--cyan)}
+    .login{max-width:450px;margin:10vh auto}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .status{margin-top:15px;padding:12px;border-radius:9px;background:#07101c;color:var(--muted);display:none}
+    .status.show{display:block}
+    .status.ok{color:var(--green)}
+    .status.err{color:var(--red)}
+    .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+    .items{display:grid;gap:10px}
+    .item{border:1px solid var(--border);border-radius:12px;padding:15px;background:#07101c;display:flex;justify-content:space-between;gap:15px;align-items:center}
+    .item-title{font-weight:800}.item-type{color:var(--muted);font-size:12px;margin-top:4px}
+    .item-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .hidden{display:none!important}
+    .hint{font-size:12px;color:var(--muted);margin-top:7px}
+    @media(max-width:700px){.toolbar{grid-template-columns:1fr}.item{flex-direction:column;align-items:stretch}.head{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+
+<div id="loginView" class="wrap">
+  <div class="panel login">
+    <div class="brand">SHABRIX <span>ADMIN</span></div>
+    <h1 style="margin-top:20px">Admin login</h1>
+    <p class="muted">Private management panel for shabrix.xyz.</p>
+
+    <form id="loginForm">
+      <label for="email">Admin email</label>
+      <input id="email" type="email" autocomplete="username" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+
+      <div class="actions">
+        <button class="button" type="submit">Sign in</button>
+      </div>
+    </form>
+
+    <div id="loginStatus" class="status"></div>
+  </div>
+</div>
+
+<div id="appView" class="hidden">
+  <header>
+    <div class="wrap head">
+      <div>
+        <div class="brand">SHABRIX <span>ADMIN</span></div>
+        <div class="muted" style="font-size:12px;margin-top:3px">Content management dashboard</div>
+      </div>
+      <button id="logoutBtn" class="button secondary">Log out</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="panel">
+      <h1>Content manager</h1>
+      <p class="muted">Create content here. Your public site will use these records after we connect the display sections.</p>
+    </div>
+
+    <div class="panel">
+      <h2 id="formTitle">New content</h2>
+
+      <label for="contentType">Content type</label>
+      <select id="contentType">
+        <option value="announcement">Announcement</option>
+        <option value="post">Post</option>
+        <option value="roadmap">Roadmap</option>
+        <option value="burn">Burn update</option>
+        <option value="liquidity">Liquidity update</option>
+        <option value="faq">FAQ</option>
+      </select>
+
+      <label for="contentTitle">Title</label>
+      <input id="contentTitle" placeholder="Example: SHBX liquidity update">
+
+      <label for="contentBody">Content</label>
+      <textarea id="contentBody" placeholder="Write your update here..."></textarea>
+      <div class="hint">You can write plain text. We will connect formatting/display to the public site in the next step.</div>
+
+      <label for="contentPublished">Status</label>
+      <select id="contentPublished">
+        <option value="true">Published</option>
+        <option value="false">Draft</option>
+      </select>
+
+      <div class="actions">
+        <button id="saveBtn" class="button">Save content</button>
+        <button id="cancelBtn" class="button secondary hidden">Cancel edit</button>
+      </div>
+      <div id="saveStatus" class="status"></div>
+    </div>
+
+    <div class="panel">
+      <div class="toolbar">
+        <div>
+          <label for="filterType">Filter</label>
+          <select id="filterType">
+            <option value="">All content</option>
+            <option value="announcement">Announcements</option>
+            <option value="post">Posts</option>
+            <option value="roadmap">Roadmap</option>
+            <option value="burn">Burn updates</option>
+            <option value="liquidity">Liquidity</option>
+            <option value="faq">FAQ</option>
+          </select>
+        </div>
+        <div>
+          <label for="search">Search</label>
+          <input id="search" placeholder="Search titles...">
+        </div>
+      </div>
+
+      <h2>Your content</h2>
+      <div id="items" class="items"></div>
+      <div id="listStatus" class="status"></div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://gvnjctpwavqxhokskxni.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_tHcCXyp5_cPkJ70R5JPC8w_krRp8U23";
+
+  const { createClient } = window.supabase;
+  const supabaseClient = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  let editingId = null;
+  let records = [];
+
+  const loginView = document.getElementById("loginView");
+  const appView = document.getElementById("appView");
+  const loginStatus = document.getElementById("loginStatus");
+  const saveStatus = document.getElementById("saveStatus");
+  const listStatus = document.getElementById("listStatus");
+
+  function showStatus(el, message, ok=false) {
+    el.textContent = message;
+    el.className = "status show " + (ok ? "ok" : "err");
+  }
+
+  function clearStatus(el) {
+    el.textContent = "";
+    el.className = "status";
+  }
+
+  function resetForm() {
+    editingId = null;
+    document.getElementById("formTitle").textContent = "New content";
+    document.getElementById("contentType").value = "announcement";
+    document.getElementById("contentTitle").value = "";
+    document.getElementById("contentBody").value = "";
+    document.getElementById("contentPublished").value = "true";
+    document.getElementById("cancelBtn").classList.add("hidden");
+    clearStatus(saveStatus);
+  }
+
+  async function checkSession() {
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error) {
+      showStatus(loginStatus, error.message);
+      return;
+    }
+
+    if (data.session) {
+      loginView.classList.add("hidden");
+      appView.classList.remove("hidden");
+      await loadContent();
+    } else {
+      loginView.classList.remove("hidden");
+      appView.classList.add("hidden");
+    }
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    clearStatus(loginStatus);
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      showStatus(loginStatus, error.message);
+      return;
+    }
+
+    document.getElementById("password").value = "";
+    await checkSession();
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    resetForm();
+    await checkSession();
+  });
+
+  async function loadContent() {
+    clearStatus(listStatus);
+
+    const { data, error } = await supabaseClient
+      .from("site_content")
+      .select("id, section, content, updated_at")
+      .order("updated_at", { ascending: false });
+
+    if (error) {
+      showStatus(listStatus, error.message);
+      return;
+    }
+
+    records = data || [];
+    renderContent();
+  }
+
+  function renderContent() {
+    const filter = document.getElementById("filterType").value;
+    const search = document.getElementById("search").value.trim().toLowerCase();
+
+    const filtered = records.filter(row => {
+      const c = row.content || {};
+      const typeOK = !filter || row.section === filter;
+      const searchOK = !search || String(c.title || "").toLowerCase().includes(search);
+      return typeOK && searchOK;
+    });
+
+    const items = document.getElementById("items");
+
+    if (!filtered.length) {
+      items.innerHTML = '<div class="muted">No content found.</div>';
+      return;
+    }
+
+    items.innerHTML = filtered.map(row => {
+      const c = row.content || {};
+      const safeTitle = escapeHtml(c.title || "(Untitled)");
+      const status = c.published === false ? "Draft" : "Published";
+      return `
+        <div class="item">
+          <div>
+            <div class="item-title">${safeTitle}</div>
+            <div class="item-type">${escapeHtml(row.section)} · ${status} · ${new Date(row.updated_at).toLocaleString()}</div>
+          </div>
+          <div class="item-actions">
+            <button class="button secondary" onclick="editContent(${row.id})">Edit</button>
+            <button class="button danger" onclick="deleteContent(${row.id})">Delete</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  document.getElementById("saveBtn").addEventListener("click", async () => {
+    clearStatus(saveStatus);
+
+    const section = document.getElementById("contentType").value;
+    const title = document.getElementById("contentTitle").value.trim();
+    const body = document.getElementById("contentBody").value.trim();
+    const published = document.getElementById("contentPublished").value === "true";
+
+    if (!title) {
+      showStatus(saveStatus, "Please enter a title.");
+      return;
+    }
+
+    const content = {
+      title,
+      body,
+      published
+    };
+
+    let result;
+
+    if (editingId) {
+      result = await supabaseClient
+        .from("site_content")
+        .update({
+          section,
+          content,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", editingId);
+    } else {
+      result = await supabaseClient
+        .from("site_content")
+        .insert({
+          section,
+          content
+        });
+    }
+
+    if (result.error) {
+      showStatus(saveStatus, result.error.message);
+      return;
+    }
+
+    showStatus(saveStatus, editingId ? "Content updated successfully." : "Content saved successfully.", true);
+    resetForm();
+    await loadContent();
+  });
+
+  document.getElementById("cancelBtn").addEventListener("click", resetForm);
+
+  window.editContent = function(id) {
+    const row = records.find(r => r.id === id);
+    if (!row) return;
+
+    const c = row.content || {};
+    editingId = id;
+
+    document.getElementById("formTitle").textContent = "Edit content";
+    document.getElementById("contentType").value = row.section || "announcement";
+    document.getElementById("contentTitle").value = c.title || "";
+    document.getElementById("contentBody").value = c.body || "";
+    document.getElementById("contentPublished").value = c.published === false ? "false" : "true";
+    document.getElementById("cancelBtn").classList.remove("hidden");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.deleteContent = async function(id) {
+    const row = records.find(r => r.id === id);
+    if (!row) return;
+
+    const title = row.content && row.content.title ? row.content.title : "this item";
+    if (!confirm("Delete " + title + "?")) return;
+
+    const { error } = await supabaseClient
+      .from("site_content")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      showStatus(listStatus, error.message);
+      return;
+    }
+
+    await loadContent();
+  };
+
+  document.getElementById("filterType").addEventListener("change", renderContent);
+  document.getElementById("search").addEventListener("input", renderContent);
+
+  supabaseClient.auth.onAuthStateChange((_event, _session) => {
+    checkSession();
+  });
+
+  checkSession();
+</script>
+</body>
+</html>
