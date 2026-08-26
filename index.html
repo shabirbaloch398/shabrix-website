@@ -607,6 +607,7 @@
       <a href="#contract">Token</a>
       <a href="#roadmap">Roadmap</a>
       <a href="#faq">FAQ</a>
+      <a href="#updates">Updates</a>
     </div>
 
     <a href="#buy" class="button">
@@ -1410,6 +1411,36 @@
 </section>
 
 
+
+<!-- ADMIN MANAGED UPDATES -->
+
+<section id="updates">
+
+  <div class="container">
+
+    <div class="section-number">
+      08 · SHABRIX UPDATES
+    </div>
+
+    <h2>
+      Latest Shabrix updates.
+    </h2>
+
+    <div id="admin-content-loading" class="card">
+      <p>Loading latest Shabrix updates...</p>
+    </div>
+
+    <div id="admin-content-empty" class="card" style="display:none;">
+      <p>No public updates have been published yet.</p>
+    </div>
+
+    <div id="admin-content-list" class="grid" style="display:none;"></div>
+
+  </div>
+
+</section>
+
+
 <!-- CTA -->
 
 <section>
@@ -1460,6 +1491,105 @@
 
 </footer>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  /*
+    SHABRIX PUBLIC CONTENT
+    Displays only published records from public.site_content.
+  */
+
+  const SHABRIX_SUPABASE_URL =
+    "https://gvnjctpwavqxhokskxni.supabase.co";
+
+  const SHABRIX_SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_tHcCXyp5_cPkJ70R5JPC8w_krRp8U23";
+
+  const shabrixSupabase =
+    window.supabase.createClient(
+      SHABRIX_SUPABASE_URL,
+      SHABRIX_SUPABASE_PUBLISHABLE_KEY
+    );
+
+  function escapeShabrixContent(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function shabrixContentType(type) {
+    const names = {
+      announcement: "Announcement",
+      post: "News",
+      roadmap: "Roadmap",
+      burn: "Burn Project",
+      liquidity: "Liquidity",
+      faq: "FAQ"
+    };
+    return names[type] || type || "Update";
+  }
+
+  async function loadShabrixAdminContent() {
+    const loading = document.getElementById("admin-content-loading");
+    const empty = document.getElementById("admin-content-empty");
+    const list = document.getElementById("admin-content-list");
+
+    if (!loading || !empty || !list) return;
+
+    try {
+      const { data, error } = await shabrixSupabase
+        .from("site_content")
+        .select("id, section, content, updated_at")
+        .order("updated_at", { ascending: false });
+
+      if (error) throw error;
+
+      const published = (data || []).filter(row => {
+        return row.content && row.content.published !== false;
+      });
+
+      loading.style.display = "none";
+
+      if (!published.length) {
+        empty.style.display = "block";
+        list.style.display = "none";
+        return;
+      }
+
+      empty.style.display = "none";
+      list.style.display = "grid";
+
+      list.innerHTML = published.map(row => {
+        const content = row.content || {};
+        const title = escapeShabrixContent(content.title || "Shabrix Update");
+        const body = escapeShabrixContent(content.body || "");
+        const type = escapeShabrixContent(shabrixContentType(row.section));
+
+        return `
+          <article class="card">
+            <div class="section-number">${type.toUpperCase()}</div>
+            <h3>${title}</h3>
+            <p style="white-space:pre-wrap;">${body}</p>
+          </article>
+        `;
+      }).join("");
+
+    } catch (error) {
+      console.error("Shabrix content error:", error);
+      loading.style.display = "none";
+      empty.style.display = "block";
+      empty.innerHTML = "<p>Latest updates are temporarily unavailable.</p>";
+    }
+  }
+
+  loadShabrixAdminContent();
+
+  setInterval(loadShabrixAdminContent, 60000);
+</script>
 
 <script>
   /*
@@ -1696,4 +1826,3 @@
 
 </body>
 </html>
-
